@@ -1,0 +1,42 @@
+CREATE TABLE IF NOT EXISTS `bcc_banks` (
+  `ID` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(255) NOT NULL,
+  `X` decimal(15, 10) NOT NULL,
+  `Y` decimal(15, 10) NOT NULL,
+  `Z` decimal(15, 10) NOT NULL,
+  `Blip` bigint DEFAULT -2128054417,
+  `OpenHour` int UNSIGNED NULL,
+  `CloseHour` int UNSIGNED NULL,
+  PRIMARY KEY (`ID`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `bcc_bank_accounts` (
+  `ID` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(255) NOT NULL,
+  `BankID` bigint UNSIGNED NOT NULL,
+  `OwnerID` int NOT NULL,
+  `cash` double (15,2) default 0.0,
+  `gold` double (15, 2) default 0.0,
+  PRIMARY KEY (`ID`),
+  CONSTRAINT `FK_Bank` FOREIGN KEY (`BankID`) REFERENCES `bcc_banks` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_Owner` FOREIGN KEY (`OwnerID`) REFERENCES `characters` (`charidentifier`) ON DELETE CASCADE ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `bcc_accounts_allowed_access` (
+  `ID` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `AccountID` bigint UNSIGNED NOT NULL,
+  `CharID` int NOT NULL,
+  `level` int UNSIGNED default 1,
+  PRIMARY KEY (`ID`),
+  CONSTRAINT `FK_Character` FOREIGN KEY (`CharID`) REFERENCES `characters` (`charidentifier`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_Account` FOREIGN KEY (`AccountID`) REFERENCES `bcc_bank_accounts` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `bcc_saftey_deposit_boxes` (
+  `ID` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `BankID` bigint UNSIGNED NOT NULL,
+  `OwnerID` int NOT NULL,
+  PRIMARY KEY (`ID`),
+  CONSTRAINT `FK_Bank` FOREIGN KEY (`BankID`) REFERENCES `bcc_banks` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_Owner` FOREIGN KEY (`OwnerID`) REFERENCES `characters` (`charidentifier`) ON DELETE CASCADE ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
