@@ -1,10 +1,6 @@
 local VORPcore = {}
 
 local Banks = {}
-local OpenBanks
-local CloseBanks
-local OpenGroup = GetRandomIntInRange(0, 0xffffff)
-local ClosedGroup = GetRandomIntInRange(0, 0xffffff)
 local IsReady = false
 
 TriggerEvent('getCore', function(core)
@@ -24,6 +20,9 @@ RegisterNetEvent('bcc-banking:returnBanks', function(banks)
 end)
 
 CreateThread(function()
+  BankOpen()
+  BankClosed()
+
   while true do
     Wait(0)
     if IsReady then
@@ -62,9 +61,9 @@ CreateThread(function()
             if sDistance <= Config.PromptDistance then
               sleep = false
               local bankClosed = CreateVarString(10, 'LITERAL_STRING', v.Name .. _U('closed'))
-              PromptSetActiveGroupThisFrame(ClosedGroup, bankClosed)
+              PromptSetActiveGroupThisFrame(GetClosedPromptGroup(), bankClosed)
 
-              if Citizen.InvokeNative(0xC92AC953F0A982AE, CloseBanks) then -- UiPromptHasStandardModeCompleted
+              if Citizen.InvokeNative(0xC92AC953F0A982AE, GetClosedPrompt()) then -- UiPromptHasStandardModeCompleted
                 Wait(100)
                 VORPcore.NotifyRightTip(
                   v.Name ..
@@ -81,9 +80,9 @@ CreateThread(function()
             if sDistance <= Config.PromptDistance then
               sleep = false
               local bankOpen = CreateVarString(10, 'LITERAL_STRING', v.Name)
-              PromptSetActiveGroupThisFrame(OpenGroup, bankOpen)
+              PromptSetActiveGroupThisFrame(GetOpenPromptGroup(), bankOpen)
 
-              if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenBanks) then -- UiPromptHasStandardModeCompleted
+              if Citizen.InvokeNative(0xC92AC953F0A982AE, GetOpenPrompt()) then -- UiPromptHasStandardModeCompleted
                 print('TODO: Prompt Pressed Open UI')
               end
             end
@@ -109,9 +108,9 @@ CreateThread(function()
           if sDistance <= Config.PromptDistance then
             sleep = false
             local bankOpen = CreateVarString(10, 'LITERAL_STRING', v.Name)
-            PromptSetActiveGroupThisFrame(OpenGroup, bankOpen)
+            PromptSetActiveGroupThisFrame(GetOpenPromptGroup(), bankOpen)
 
-            if Citizen.InvokeNative(0xC92AC953F0A982AE, OpenBanks) then -- UiPromptHasStandardModeCompleted
+            if Citizen.InvokeNative(0xC92AC953F0A982AE, GetOpenPrompt()) then -- UiPromptHasStandardModeCompleted
               print('TODO: Prompt Pressed Open UI')
             end
           end
@@ -146,34 +145,6 @@ AddEventHandler('onResourceStop', function(resourceName)
   if (GetCurrentResourceName() ~= resourceName) then
     return
   end
-  PromptDelete(OpenBanks)
-  PromptDelete(CloseBanks)
+  DeletePrompts()
   ClearBlips(Banks)
 end)
-
--- Prompts
-function BankOpen()
-  local str = _U('shopPrompt')
-  OpenBanks = PromptRegisterBegin()
-  PromptSetControlAction(OpenBanks, Config.key)
-  str = CreateVarString(10, 'LITERAL_STRING', str)
-  PromptSetText(OpenBanks, str)
-  PromptSetEnabled(OpenBanks, 1)
-  PromptSetVisible(OpenBanks, 1)
-  PromptSetStandardMode(OpenBanks, 1)
-  PromptSetGroup(OpenBanks, OpenGroup)
-  PromptRegisterEnd(OpenBanks)
-end
-
-function BankClosed()
-  local str = _U('shopPrompt')
-  CloseBanks = PromptRegisterBegin()
-  PromptSetControlAction(CloseBanks, Config.key)
-  str = CreateVarString(10, 'LITERAL_STRING', str)
-  PromptSetText(CloseBanks, str)
-  PromptSetEnabled(CloseBanks, 1)
-  PromptSetVisible(CloseBanks, 1)
-  PromptSetStandardMode(CloseBanks, 1)
-  PromptSetGroup(CloseBanks, ClosedGroup)
-  PromptRegisterEnd(CloseBanks)
-end

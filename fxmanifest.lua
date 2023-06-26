@@ -9,8 +9,9 @@ author 'SavSin'
 description 'A banking system'
 
 client_scripts {
-  'client/main.lua',
+  'client/prompts.lua',
   'client/helpers.lua',
+  'client/main.lua',
 }
 
 shared_script {
