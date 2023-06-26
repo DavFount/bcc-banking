@@ -25,10 +25,10 @@ CreateThread(function()
 
   while true do
     Wait(0)
+    local sleep = true
     if IsReady then
       local player = PlayerPedId()
       local coords = GetEntityCoords(player)
-      local sleep = true
       local hour = GetClockHours()
 
       for _, v in pairs(Banks) do
@@ -127,6 +127,9 @@ CreateThread(function()
           end
         end
       end
+    end
+    if sleep then
+      Wait(1000)
     end
   end
 end)
