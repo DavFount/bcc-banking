@@ -9,34 +9,36 @@ author 'SavSin'
 description 'A banking system'
 
 client_scripts {
-  'client/main.lua'
+  'client/main.lua',
+  'client/helpers.lua',
 }
 
 shared_script {
-  "config.lua",
-  'languages/*.lua',
+  'config.lua',
   'locale.lua',
+  'languages/*.lua',
 }
 
 server_scripts {
-  "@oxmysql/lib/MySQL.lua",
-  "server/main.lua",
+  '@oxmysql/lib/MySQL.lua',
+  'server/main.lua',
+  'server/events.lua',
 }
 
 ui_page {
-  "ui/shim.html"
+  'ui/shim.html'
 }
 
 files {
-  "ui/shim.html",
-  "ui/dist/js/*.*",
-  "ui/dist/css/*.*",
-  "ui/dist/fonts/*.*"
+  'ui/shim.html',
+  'ui/dist/js/*.*',
+  'ui/dist/css/*.*',
+  'ui/dist/fonts/*.*',
 }
 
 dependencies {
   'vorp_core',
-  'oxmysql'
+  'oxmysql',
 }
 
 version '1.0.0'
