@@ -3,7 +3,7 @@ Config.defaultlang = "en_lang"
 
 Config.key = 0x760A9C6F -- Open Bank UI and Saftey Deposit Boxes
 
-Config.PromptDistance = 5.0
+Config.PromptDistance = 3.0
 
 -- Saftey Deposit Box Options
 Config.SafetyDepositBoxLimits = 5
@@ -72,38 +72,38 @@ Config.BlipColors     = {
   LIGHT_PINK    = "BLIP_MODIFIER_MP_COLOR_29",
   LIGHT_RED     = "BLIP_MODIFIER_MP_COLOR_30",
   LIGHT_YELLOW3 = "BLIP_MODIFIER_MP_COLOR_31",
-  WHITE         = "BLIP_MODIFIER_MP_COLOR_32"
+  WHITE         = "BLIP_MODIFIER_MP_COLOR_32",
 }
 
 -- Door Hashes
 Config.Doors          = {
   [2642457609] = 0, -- Valentine bank, front entrance, left door
-  [3886827663] = 0, -- Valentine bank, front entrance, right door
-  [1340831050] = 0, -- Valentine bank, gate to tellers
-  [576950805]  = 0, -- Valentine bank, vault door
-  [3718620420] = 0, -- Valentine bank, door behind tellers
-  [2343746133] = 0, -- Valentine bank, door to backrooms
-  [2307914732] = 0, -- Valentine bank, back door
-  [334467483]  = 0, -- Valentine bank, door to hall in vault antechamber
+  [3886827663] = 1, -- Valentine bank, front entrance, right door
+  [1340831050] = 1, -- Valentine bank, gate to tellers
+  [576950805]  = 1, -- Valentine bank, vault door
+  [3718620420] = 1, -- Valentine bank, door behind tellers
+  [2343746133] = 1, -- Valentine bank, door to backrooms
+  [2307914732] = 1, -- Valentine bank, back door
+  [334467483]  = 1, -- Valentine bank, door to hall in vault antechamber
 
   [1733501235] = 0, -- Saint Denis bank, west entrance, right door
   [2158285782] = 0, -- Saint Denis bank, west entrance, left door
-  [1634115439] = 0, -- Saint Denis bank, manager's office, right door
-  [965922748]  = 0, -- Saint Denis bank, manager's office, left door
-  [2817024187] = 0, -- Saint Denis bank, north entrance, left door
-  [2089945615] = 0, -- Saint Denis bank, north entrance, right door
-  [1751238140] = 0, -- Saint Denis bank, vault
+  [1634115439] = 1, -- Saint Denis bank, manager's office, right door
+  [965922748]  = 1, -- Saint Denis bank, manager's office, left door
+  [2817024187] = 1, -- Saint Denis bank, north entrance, left door
+  [2089945615] = 1, -- Saint Denis bank, north entrance, right door
+  [1751238140] = 1, -- Saint Denis bank, vault
 
   [531022111]  = 0, -- Blackwater bank, entrance
-  [2817192481] = 0, -- Blackwater bank, office
-  [2117902999] = 0, -- Blackwater bank, teller gate
-  [1462330364] = 0, -- Blackwater bank, vault
+  [2817192481] = 1, -- Blackwater bank, office
+  [2117902999] = 1, -- Blackwater bank, teller gate
+  [1462330364] = 1, -- Blackwater bank, vault
 
   [3317756151] = 0, -- Rhodes bank, front entrance, left door
   [3088209306] = 0, -- Rhodes bank, front entrance, right door
-  [2058564250] = 0, -- Rhodes bank, door to backrooms
-  [1634148892] = 0, -- Rhodes bank, teller gate
-  [3483244267] = 0, -- Rhodes bank, vault
+  [2058564250] = 1, -- Rhodes bank, door to backrooms
+  [1634148892] = 1, -- Rhodes bank, teller gate
+  [3483244267] = 1, -- Rhodes bank, vault
   [3142122679] = 1, -- Rhodes bank, back entrance
 
   -- [2446974165] = 0, -- Rhodes saloon, bath room door

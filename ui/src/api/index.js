@@ -1,7 +1,9 @@
-import axios from "axios";
+import axios from 'axios'
 
 const api = axios.create({
-	baseURL: `https://${typeof GetParentResourceName !== 'undefined' ? GetParentResourceName() : 'bcc-vue-boilerplate'}/`,
-});
+  baseURL: `https://${
+    typeof GetParentResourceName !== 'undefined' ? GetParentResourceName() : 'bcc-banking'
+  }/`
+})
 
-export default api;
+export default api

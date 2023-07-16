@@ -1,115 +1,82 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import { RouterView } from 'vue-router';
+import api from './api';
+import NavigationBar from '@/components/NavigationBar.vue';
+
+const visible = ref(false);
+const devmode = ref(true);
+
+onMounted(() => {
+  window.addEventListener('message', onMessage);
+});
+
+const onMessage = (event) => {
+  switch (event.data.type) {
+    case 'toggle':
+      visible.value = event.data.visible;
+      api
+        .post('updatestate', {
+          state: visible.value,
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+      break;
+    default:
+      break;
+  }
+};
+
+const closeApp = () => {
+  visible.value = false;
+  api
+    .post('updatestate', {
+      state: visible.value,
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+</script>
+
 <template>
-  <div id="content" v-if="visible || devmode">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      
-      <div id="close" @click="closeApp">Close</div>
-    </nav>
-    <router-view/>
+  <div class="container" v-if="visible || devmode">
+    <NavigationBar />
+    <RouterView />
   </div>
 </template>
-<script>
-  import api from "./api";
 
-  export default {
-    name: 'DefaultLayout',
-    data() {
-      return {
-        devmode: false,
-        visible: false
-      }
-    },
-    mounted() {
-      window.addEventListener("message", this.onMessage);
-    },
-    methods: {
-      onMessage(event) {
-        switch(event.data.type) {
-          case "toggle":
-            this.visible = event.data.visible;
-            api.post("updatestate", {
-              state: this.visible
-            }).catch(e => {
-              console.log(e.message)
-            });
-            break;
-          default:
-            break;
-        }
-      },
-      closeApp() {
-        this.visible = false
-        api.post("updatestate", {
-          state: this.visible
-        }).catch(e => {
-          console.log(e.message)
-        });
-      }
-    }
-  }
-  </script>
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #fff;
-}
-
-h3 {
-  margin: 40px 0 0;
-}
-
-ol {
-  text-align: left;
-}
-
-a {
-  color: #42b983;
-}
-a:hover {
-  color: #fff;
-  cursor: pointer;
-}
-
-#content {
+<style scoped>
+.container {
   background-color: rgb(32, 32, 32);
+
+  /* background-image: url('./assets/images/bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position: 0;
+  background-size: 100%; */
+
   border-radius: 6px;
-  max-width: 500px;
-  max-height: 800px;
-  padding: 10px;
+  height: 75vh;
+  width: 75vw;
 
   position: absolute;
-  top: 20%;
-  left: 50%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-  transform: translate(-50%, -20%);
+  margin: auto;
+  overflow: hidden;
 }
 
 #close {
   position: absolute;
   right: 0;
   top: 0;
+  margin-right: 0.75rem;
+  margin-top: 0.3rem;
+  font-size: 25px;
 }
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #fff;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-
-  a:hover {
-    color: #42b983;
-    cursor: pointer;
-  }
-}
-
 </style>

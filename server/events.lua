@@ -7,3 +7,7 @@ RegisterServerEvent("bcc-banking:getBanks", function()
 
   TriggerClientEvent('bcc-banking:returnBanks', _source, Banks)
 end)
+
+RegisterServerEvent("bcc-banking:setBankerBusy", function(id, isBusy)
+  Banks[id].status = isBusy
+end)

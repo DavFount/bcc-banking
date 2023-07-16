@@ -15,7 +15,17 @@ function ClearBlips(banks)
   end
 end
 
+function ClearNPCs(banks)
+  for _, v in pairs(banks) do
+    if v.NPC then
+      DeleteEntity(v.NPC)
+      v.NPC = nil
+    end
+  end
+end
+
 function AddNPC(bank)
+  print('Add NPC Called')
   local model = joaat(Config.NPCModel)
   LoadModel(model)
   local npc = CreatePed(Config.NPCModel, tonumber(bank.X), tonumber(bank.Y), tonumber(bank.Z) - 1, tonumber(bank.H),
@@ -30,11 +40,11 @@ function AddNPC(bank)
 end
 
 function AddBlip(bank, isOpen)
-  local blip = N_0x554d9d53f696d002(1664425300, bank.X, bank.Y, bank.Z) -- BlipAddForCoords
-  SetBlipSprite(bank.Blip, bank.blipSprite, 1)
-  SetBlipScale(bank.Blip, 0.2)
+  local blip = Citizen.InvokeNative(0x554D9D53F696D002, 1664425300, tonumber(bank.X), tonumber(bank.Y), tonumber(bank.Z)) -- BlipAddForCoords
+  SetBlipSprite(blip, bank.Blip, 1)
+  SetBlipScale(blip, 0.2)
   local bankName = bank.Name .. " Bank"
-  Citizen.InvokeNative(0x9CB1A1623062F402, bank.Blip, bankName)
+  Citizen.InvokeNative(0x9CB1A1623062F402, blip, bankName)
   if isOpen then
     Citizen.InvokeNative(0x662D364ABF16DE2F, blip, joaat(Config.BlipColors[Config.BlipColor['open']]))   -- BlipAddModifier
   else

@@ -1,7 +1,9 @@
 local OpenBanks
 local CloseBanks
+local BusyBanker
 local OpenGroup = GetRandomIntInRange(0, 0xffffff)
 local ClosedGroup = GetRandomIntInRange(0, 0xffffff)
+local BankerBusyGroup = GetRandomIntInRange(0, 0xffffff)
 
 function GetOpenPromptGroup()
   return OpenGroup
@@ -17,6 +19,14 @@ end
 
 function GetClosedPrompt()
   return CloseBanks
+end
+
+function GetBusyPromptGroup()
+  return BankerBusyGroup
+end
+
+function GetBusyPrompt()
+  return BusyBanker
 end
 
 function BankOpen()
@@ -43,6 +53,19 @@ function BankClosed()
   PromptSetStandardMode(CloseBanks, 1)
   PromptSetGroup(CloseBanks, ClosedGroup)
   PromptRegisterEnd(CloseBanks)
+end
+
+function BankerBusy()
+  local str = _U('shopPrompt')
+  BusyBanker = PromptRegisterBegin()
+  PromptSetControlAction(BusyBanker, Config.key)
+  str = CreateVarString(10, 'LITERAL_STRING', str)
+  PromptSetText(BusyBanker, str)
+  PromptSetEnabled(BusyBanker, 1)
+  PromptSetVisible(BusyBanker, 1)
+  PromptSetStandardMode(BusyBanker, 1)
+  PromptSetGroup(BusyBanker, BusyBanker)
+  PromptRegisterEnd(BusyBanker)
 end
 
 function DeletePrompts()
