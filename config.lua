@@ -5,6 +5,9 @@ Config.key = 0x760A9C6F -- Open Bank UI and Saftey Deposit Boxes
 
 Config.PromptDistance = 3.0
 
+-- Account Settings
+Config.maxAccounts = 1 -- 0 = No limit
+
 -- Saftey Deposit Box Options
 Config.SafetyDepositBoxLimits = 5
 Config.SafetyDepositBoxes = {
@@ -78,7 +81,7 @@ Config.BlipColors     = {
 -- Door Hashes
 Config.Doors          = {
   [2642457609] = 0, -- Valentine bank, front entrance, left door
-  [3886827663] = 1, -- Valentine bank, front entrance, right door
+  [3886827663] = 0, -- Valentine bank, front entrance, right door
   [1340831050] = 1, -- Valentine bank, gate to tellers
   [576950805]  = 1, -- Valentine bank, vault door
   [3718620420] = 1, -- Valentine bank, door behind tellers

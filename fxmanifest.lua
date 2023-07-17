@@ -11,6 +11,7 @@ description 'A banking system'
 client_scripts {
   'client/prompts.lua',
   'client/helpers.lua',
+  'client/nui.lua',
   'client/main.lua',
 }
 
@@ -27,11 +28,11 @@ server_scripts {
 }
 
 ui_page {
-  'ui/index.html'
+  'ui/shim.html'
 }
 
 files {
-  'ui/index.html',
+  'ui/shim.html',
   'ui/dist/js/*.*',
   'ui/dist/css/*.*',
   'ui/dist/fonts/*.*',

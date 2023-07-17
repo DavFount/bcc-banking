@@ -1,9 +1,7 @@
-local VORPcore = {}
+VORPcore = {}
 
 local Banks = {}
 local IsReady = false
-
-local State = false
 
 -- FOR DEBUG ONLY
 RegisterCommand('make_ready', function()
@@ -100,10 +98,9 @@ CreateThread(function()
                     VORPcore.NotifyRightTip("The banker is currently busy. Try again later.", 4000)
                   else
                     TriggerServerEvent("bcc-banking:setBankerBusy", bank.ID, true)
-                    SendNUIMessage({
-                      type = 'toggle',
-                      visible = true
-                    })
+                    VORPcore.RpcCall('GetUserBankData', function(accountData, charId)
+                      OpenUI(bank, accountData, charId)
+                    end, bank.ID)
                   end
                 end, bank.ID)
               end
@@ -134,13 +131,12 @@ CreateThread(function()
             if Citizen.InvokeNative(0xC92AC953F0A982AE, GetOpenPrompt()) then -- UiPromptHasStandardModeCompleted
               VORPcore.RpcCall('CheckBankerStatus', function(isBusy)
                 if isBusy then
-                  print('Banker is Busy!')
+                  VORPcore.NotifyRightTip("The banker is currently busy. Try again later.", 4000)
                 else
                   TriggerServerEvent("bcc-banking:setBankerBusy", bank.ID, true)
-                  SendNUIMessage({
-                    type = 'toggle',
-                    visible = true
-                  })
+                  VORPcore.RpcCall('GetUserBankData', function(accountData, charId)
+                    OpenUI(bank, accountData, charId)
+                  end, bank.ID)
                 end
               end, bank.ID)
             end
@@ -184,15 +180,4 @@ AddEventHandler('onResourceStop', function(resourceName)
   DeletePrompts()
   ClearBlips(Banks)
   ClearNPCs(Banks)
-end)
-
-RegisterNUICallback('updatestate', function(args, cb)
-  print('State change received!', State)
-  State = args.state
-  SetNuiFocus(State, State)
-
-  if not State then
-    TriggerServerEvent("bcc-banking:setBankerBusy", 1, false)
-  end
-  cb('ok')
 end)

@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `bcc_bank_accounts` (
   `OwnerID` int NOT NULL,
   `cash` double (15,2) default 0.0,
   `gold` double (15, 2) default 0.0,
+  `locked` tinyint default 0,
   PRIMARY KEY (`ID`),
   CONSTRAINT `FK_Bank` FOREIGN KEY (`BankID`) REFERENCES `bcc_banks` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_Owner` FOREIGN KEY (`OwnerID`) REFERENCES `characters` (`charidentifier`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -27,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `bcc_accounts_allowed_access` (
   `ID` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `AccountID` bigint UNSIGNED NOT NULL,
   `CharID` int NOT NULL,
-  `level` int UNSIGNED default 1,
+  `level` int UNSIGNED default 2,
   PRIMARY KEY (`ID`),
   CONSTRAINT `FK_ba_Character` FOREIGN KEY (`CharID`) REFERENCES `characters` (`charidentifier`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_ba_Account` FOREIGN KEY (`AccountID`) REFERENCES `bcc_bank_accounts` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -46,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `bcc_saftey_deposit_boxes` (
 -- SELECT * FROM `bcc_bank_accounts` INNER JOIN `bcc_accounts_allowed_access` ON `bcc_bank_accounts`.ID = `bcc_accounts_allowed_access`.`AccountID` WHERE `bcc_accounts_allowed_access`.`CharID` = 2;
 
 -- Seed DB
--- INSERT INTO `bcc_banks` (`Name`, `X`, `Y`, `Z`, `H`) VALUES ('Valentine', 308.02, 773.82, 116.7, 18.69);
+-- INSERT INTO `bcc_banks` (`Name`, `X`, `Y`, `Z`, `H`, Blip) VALUES ('Valentine', -308.16, 773.77, 118.70, 1.31, -2128054417);
 -- INSERT INTO `bcc_banks` (`Name`, `X`, `Y`, `Z`, `H`) VALUES ('Blackwater ', 813.18, -1275.42, 42.64, 176.86);
 -- INSERT INTO `bcc_banks` (`Name`, `X`, `Y`, `Z`, `H`) VALUES ('SaintDenis', 2645.12, -1294.37, 51.25, 30.64);
 -- INSERT INTO `bcc_banks` (`Name`, `X`, `Y`, `Z`, `H`) VALUES ('Rhodes', 1292.84, -1304.74, 76.04, 327.08);
